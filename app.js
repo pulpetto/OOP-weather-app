@@ -57,11 +57,15 @@ class App {
                         // display data function ------------------
 
                         // weather img
-                        if (data.weather[0].description === "")
-                            // weather temp
-                            weatherTemp.innerText = `${Math.trunc(
-                                data.main.temp
-                            )}℃`;
+                        if (2 === "") {
+                            if (data.weather[0].description === "") {
+                            }
+                        }
+
+                        // weather temp
+                        weatherTemp.innerText = `${Math.trunc(
+                            data.main.temp
+                        )}℃`;
 
                         // weather name
                         weatherName.innerText = data.weather[0].description;
