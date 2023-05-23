@@ -22,51 +22,139 @@ body {
 
 /* ------------------------------------- */
 .app {
-    background-color: rgb(108, 108, 108);
-    border: 1px dashed greenyellow;
+    /* background-color: rgb(108, 108, 108); */
+    background-color: rgb(43, 43, 43);
 
     border-radius: 25px;
+    padding: 3rem;
+    font-size: 4rem;
+    box-shadow: 8px 8px 24px 0px rgb(0, 0, 0);
 }
 
 /* searching by name */
 .app__search {
-}
-.app__search--location-icon {
-}
-.app__search--input {
-}
-.app__search__btn--search-icon {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 1rem;
 }
 
+.app__search--location-icon {
+    width: 4rem;
+    height: 4rem;
+}
+
+.app__search--input {
+    background-color: rgb(43, 43, 43);
+    border: none;
+    /* outline: white 1px solid; */
+    outline: none;
+    font-size: 3rem;
+    color: white;
+    padding: 1rem;
+    border-bottom: 1px solid transparent;
+}
+
+.app__search--input:focus {
+    border-bottom: 1px solid white;
+}
+
+.app__search__btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    border: none;
+    background-color: rgb(43, 43, 43);
+    transition: all 0.3s;
+}
+
+.app__search__btn:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.app__search__btn:active {
+    transform: scale(0.9);
+}
+
+.app__search__btn--search-icon {
+    width: 3rem;
+    height: 3rem;
+}
+
+/*  */
 .app__main {
+    height: 0rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s, height 0.3s;
 }
 
 /* weather info */
 .app__main__weather {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 4rem;
 }
+
 .app__main__weather--icon {
+    width: 30rem;
+    height: 30rem;
 }
+
 .app__main__weather--temp {
 }
+
 .app__main__weather--name {
+}
+
+/*  */
+
+section {
+    display: flex;
+    justify-content: space-between;
 }
 
 /* sunrise */
 .app__main__sunrise {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
+
 .app__main__sunrise--icon {
+    width: 4rem;
+    height: 4rem;
+    fill: yellow;
 }
+
 .app__main__sunrise--name {
 }
+
 .app__main__sunrise--time {
 }
 
 /* sunset */
 .app__main__sunset {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
+
 .app__main__sunset--icon {
+    width: 4rem;
+    height: 4rem;
+    fill: orange;
 }
+
 .app__main__sunset--name {
 }
+
 .app__main__sunset--time {
 }
