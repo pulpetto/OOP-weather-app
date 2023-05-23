@@ -23,33 +23,37 @@ body {
 /* classes */
 .app {
 }
-.app__location {
+.app__search {
 }
-.app__location--icon {
+.app__search--location-icon {
 }
-.app__location--name {
+.app__search--input {
 }
-.app__weather {
+.app__search__btn--search-icon {
 }
-.app__weather--icon {
+.app__main {
 }
-.app__weather--temp {
+.app__main__weather {
 }
-.app__weather--name {
+.app__main__weather--icon {
 }
-.app__sunrise {
+.app__main__weather--temp {
 }
-.app__sunrise--icon {
+.app__main__weather--name {
 }
-.app__sunrise--name {
+.app__main__sunrise {
 }
-.app__sunrise--time {
+.app__main__sunrise--icon {
 }
-.app__sunset {
+.app__main__sunrise--name {
 }
-.app__sunset--icon {
+.app__main__sunrise--time {
 }
-.app__sunset--name {
+.app__main__sunset {
 }
-.app__sunset--time {
+.app__main__sunset--icon {
+}
+.app__main__sunset--name {
+}
+.app__main__sunset--time {
 }

@@ -16,27 +16,63 @@
     </head>
     <body>
         <main class="app">
-            <div class="app__location">
+            <div class="app__search">
+                <img
+                    src=""
+                    class="app__search--location-icon"
+                    alt="location icon"
+                />
+
+                <input
+                    class="app__search--input"
+                    type="text"
+                    placeholder="city name..."
+                />
+
+                <button class="app__search__btn--search-icon">
+                    <img
+                        src=""
+                        class="app__search__btn--search-icon"
+                        alt="search icon"
+                    />
+                </button>
+            </div>
+
+            <!-- <div class="app__location">
                 <img src="" class="app__location--icon" alt="location icon" />
                 <div class="app__location--name">Warsaw</div>
-            </div>
+            </div> -->
 
-            <div class="app__weather">
-                <img src="" class="app__weather--icon" alt="weather icon" />
-                <div class="app__weather--temp">26℃</div>
-                <div class="app__weather--name">Sunny</div>
-            </div>
+            <div class="app__main">
+                <div class="app__main__weather">
+                    <img
+                        src=""
+                        class="app__main__weather--icon"
+                        alt="weather icon"
+                    />
+                    <div class="app__main__weather--temp">26℃</div>
+                    <div class="app__main__weather--name">Sunny</div>
+                </div>
 
-            <div class="app__sunrise">
-                <img src="" class="app__sunrise--icon" alt="sunrise icon" />
-                <div class="app__sunrise--name">Sunrise</div>
-                <div class="app__sunrise--time">4:57</div>
-            </div>
+                <div class="app__main__sunrise">
+                    <img
+                        src=""
+                        class="app__main__sunrise--icon"
+                        alt="sunrise icon"
+                    />
+                    <div class="app__main__sunrise--name">Sunrise</div>
+                    <div class="app__main__sunrise--time">4:57</div>
+                </div>
 
-            <div class="app__sunset">
-                <img src="" class="app__sunset--icon" alt="sunset icon" />
-                <div class="app__sunset--name">Sunset</div>
-                <div class="app__sunset--time">21:42</div>
+                <div class="app__main__sunset">
+                    <img
+                        src=""
+                        class="app__main__sunset--icon"
+                        alt="sunset icon"
+                    />
+                    <div class="app__main__sunset--name">Sunset</div>
+                    <div class="app__main__sunset--time">21:42</div>
+                </div>
             </div>
         </main>
         <script src="/app.js"></script>
