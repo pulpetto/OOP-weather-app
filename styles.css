@@ -20,9 +20,15 @@ body {
     align-items: center;
 }
 
-/* classes */
+/* ------------------------------------- */
 .app {
+    background-color: rgb(108, 108, 108);
+    border: 1px dashed greenyellow;
+
+    border-radius: 25px;
 }
+
+/* searching by name */
 .app__search {
 }
 .app__search--location-icon {
@@ -31,8 +37,11 @@ body {
 }
 .app__search__btn--search-icon {
 }
+
 .app__main {
 }
+
+/* weather info */
 .app__main__weather {
 }
 .app__main__weather--icon {
@@ -41,6 +50,8 @@ body {
 }
 .app__main__weather--name {
 }
+
+/* sunrise */
 .app__main__sunrise {
 }
 .app__main__sunrise--icon {
@@ -49,6 +60,8 @@ body {
 }
 .app__main__sunrise--time {
 }
+
+/* sunset */
 .app__main__sunset {
 }
 .app__main__sunset--icon {
