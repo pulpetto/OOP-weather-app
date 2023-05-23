@@ -19,3 +19,37 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+/* classes */
+.app {
+}
+.app__location {
+}
+.app__location--icon {
+}
+.app__location--name {
+}
+.app__weather {
+}
+.app__weather--icon {
+}
+.app__weather--temp {
+}
+.app__weather--name {
+}
+.app__sunrise {
+}
+.app__sunrise--icon {
+}
+.app__sunrise--name {
+}
+.app__sunrise--time {
+}
+.app__sunset {
+}
+.app__sunset--icon {
+}
+.app__sunset--name {
+}
+.app__sunset--time {
+}
