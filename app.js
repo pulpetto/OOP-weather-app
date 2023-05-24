@@ -86,18 +86,6 @@ class App {
                         const nowTimeVal =
                             nowUnixDate.toLocaleTimeString("it-IT");
 
-                        // night img
-                        if (
-                            nowTimeVal >= sunsetTimeVal &&
-                            nowTimeVal <= sunriseTimeVal
-                        ) {
-                            console.log("it's night");
-
-                            if (data.weather[0].description === "") {
-                                //
-                            }
-                        }
-
                         // day img
                         if (
                             nowTimeVal <= sunsetTimeVal &&
@@ -105,8 +93,20 @@ class App {
                         ) {
                             console.log("it's day");
 
-                            if (data.weather[0].description === "") {
-                                //
+                            if (data.weather[0].description === "clear sky") {
+                                weatherImg.src = "/svg/clear sky DAY.svg";
+                            }
+                        }
+
+                        // night img
+                        if (
+                            nowTimeVal >= sunsetTimeVal &&
+                            nowTimeVal <= sunriseTimeVal
+                        ) {
+                            console.log("it's night");
+
+                            if (data.weather[0].description === "clear sky") {
+                                weatherImg.src = "/svg/clear sky NIGHT.svg";
                             }
                         }
                     });
@@ -123,8 +123,6 @@ const weatherApp = new App();
 // if not, user can input manually
 
 // if city not found display error manually
-
-// display sunrise, sunset, weather, cityname
 
 // ---------------- check it later --------------------- //
 // const btnNew = document.querySelector(".spk");
