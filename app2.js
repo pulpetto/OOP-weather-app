@@ -20,7 +20,7 @@ class App {
         input.value = "";
     }
 
-    _displayWeather() {
+    _displayWeather(data) {
         weather.style.marginTop = "5rem";
         weather.style.height = "50rem";
         setTimeout(() => {
@@ -106,9 +106,7 @@ class App {
                 return fetch(coords);
             })
             .then((json2) => json2.json())
-            .then((data) => {
-                this._displayWeather(data);
-            })
+            .then((data) => this._displayWeather(data))
             .catch((err) => console.error(`${err}⛔⛔⛔`));
     }
 
