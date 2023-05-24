@@ -56,12 +56,6 @@ class App {
 
                         // display data function ------------------
 
-                        // weather img
-                        if (2 === "") {
-                            if (data.weather[0].description === "") {
-                            }
-                        }
-
                         // weather temp
                         weatherTemp.innerText = `${Math.trunc(
                             data.main.temp
@@ -85,6 +79,36 @@ class App {
                             sunsetUnixDate.toLocaleTimeString("it-IT");
 
                         sunsetTime.innerText = sunsetTimeVal.slice(0, 5);
+
+                        // weather img
+                        const nowUnix = new Date().getTime();
+                        const nowUnixDate = new Date(nowUnix);
+                        const nowTimeVal =
+                            nowUnixDate.toLocaleTimeString("it-IT");
+
+                        // night img
+                        if (
+                            nowTimeVal >= sunsetTimeVal &&
+                            nowTimeVal <= sunriseTimeVal
+                        ) {
+                            console.log("it's night");
+
+                            if (data.weather[0].description === "") {
+                                //
+                            }
+                        }
+
+                        // day img
+                        if (
+                            nowTimeVal <= sunsetTimeVal &&
+                            nowTimeVal >= sunriseTimeVal
+                        ) {
+                            console.log("it's day");
+
+                            if (data.weather[0].description === "") {
+                                //
+                            }
+                        }
                     });
             });
         }
