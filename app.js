@@ -26,9 +26,13 @@ class App {
         const apiCallbyCity = `http://api.openweathermap.org/geo/1.0/direct?q=${input.value}&limit=5&appid=721a956f72738d6959dce2e545fb8d44`;
 
         fetch(apiCallbyCity)
-            .then((json) => json.json())
+            .then(
+                (json1) => json1.json(),
+                (err) => alert(err)
+            )
             .then((data) => {
                 // if (data.length > 1) return;
+                // if (data == undefined) return;
                 if (input.value !== data[0].name) return;
 
                 // visuals
@@ -45,79 +49,77 @@ class App {
 
                 const coords = `https://api.openweathermap.org/data/2.5/weather?lat=${cityLat}&lon=${cityLng}&appid=721a956f72738d6959dce2e545fb8d44&units=metric`;
 
-                fetch(coords)
-                    .then((json) => json.json())
-                    .then((data) => {
-                        // ------------------------- display all weather and get data -------------
+                return fetch(coords);
+            })
+            .then((json2) => json2.json())
+            .then((data) => {
+                // ------------------------- display all weather and get data -------------
 
-                        console.log(data);
-                        input.value = data.name;
+                console.log(data);
+                // input.value = data.name;
 
-                        // show weather function----------------------
-                        weather.style.marginTop = "5rem";
-                        weather.style.height = "50rem";
-                        setTimeout(() => {
-                            weather.style.opacity = 1;
-                            weather.style.visibility = "visible";
-                        }, 200);
+                // show weather function----------------------
+                weather.style.marginTop = "5rem";
+                weather.style.height = "50rem";
+                setTimeout(() => {
+                    weather.style.opacity = 1;
+                    weather.style.visibility = "visible";
+                }, 200);
 
-                        // display data function ------------------
+                // display data function ------------------
 
-                        // weather temp
-                        weatherTemp.innerText = `${Math.trunc(
-                            data.main.temp
-                        )}℃`;
+                // weather temp
+                weatherTemp.innerText = `${Math.trunc(data.main.temp)}℃`;
 
-                        // weather name
-                        weatherName.innerText = data.weather[0].description;
+                // weather name
+                weatherName.innerText = data.weather[0].description;
 
-                        // sunrise time
-                        const sunriseUnix = data.sys.sunrise;
-                        const sunriseUnixDate = new Date(sunriseUnix * 1000);
-                        const sunriseTimeVal =
-                            sunriseUnixDate.toLocaleTimeString("it-IT");
+                // sunrise time
+                const sunriseUnix = data.sys.sunrise;
+                const sunriseUnixDate = new Date(sunriseUnix * 1000);
+                const sunriseTimeVal =
+                    sunriseUnixDate.toLocaleTimeString("it-IT");
 
-                        sunriseTime.innerText = sunriseTimeVal.slice(0, 5);
+                sunriseTime.innerText = sunriseTimeVal.slice(0, 5);
 
-                        // sunset time
-                        const sunsetUnix = data.sys.sunset;
-                        const sunsetUnixDate = new Date(sunsetUnix * 1000);
-                        const sunsetTimeVal =
-                            sunsetUnixDate.toLocaleTimeString("it-IT");
+                // sunset time
+                const sunsetUnix = data.sys.sunset;
+                const sunsetUnixDate = new Date(sunsetUnix * 1000);
+                const sunsetTimeVal =
+                    sunsetUnixDate.toLocaleTimeString("it-IT");
 
-                        sunsetTime.innerText = sunsetTimeVal.slice(0, 5);
+                sunsetTime.innerText = sunsetTimeVal.slice(0, 5);
 
-                        // weather img
-                        const nowUnix = new Date().getTime();
-                        const nowUnixDate = new Date(nowUnix);
-                        const nowTimeVal =
-                            nowUnixDate.toLocaleTimeString("it-IT");
+                // weather img
+                const nowUnix = new Date().getTime();
+                const nowUnixDate = new Date(nowUnix);
+                const nowTimeVal = nowUnixDate.toLocaleTimeString("it-IT");
 
-                        // day img
-                        if (
-                            nowTimeVal <= sunsetTimeVal &&
-                            nowTimeVal >= sunriseTimeVal
-                        ) {
-                            console.log("it's day");
+                // day img
+                if (
+                    nowTimeVal <= sunsetTimeVal &&
+                    nowTimeVal >= sunriseTimeVal
+                ) {
+                    console.log("it's day");
 
-                            if (data.weather[0].description === "clear sky") {
-                                weatherImg.src = "/svg/clear sky DAY.svg";
-                            }
-                        }
+                    if (data.weather[0].description === "clear sky") {
+                        weatherImg.src = "/svg/clear sky DAY.svg";
+                    }
+                }
 
-                        // night img
-                        if (
-                            nowTimeVal >= sunsetTimeVal &&
-                            nowTimeVal <= sunriseTimeVal
-                        ) {
-                            console.log("it's night");
+                // night img
+                if (
+                    nowTimeVal >= sunsetTimeVal &&
+                    nowTimeVal <= sunriseTimeVal
+                ) {
+                    console.log("it's night");
 
-                            if (data.weather[0].description === "clear sky") {
-                                weatherImg.src = "/svg/clear sky NIGHT.svg";
-                            }
-                        }
-                    });
-            });
+                    if (data.weather[0].description === "clear sky") {
+                        weatherImg.src = "/svg/clear sky NIGHT.svg";
+                    }
+                }
+            })
+            .catch((err) => console.error(`${err}⛔⛔⛔`));
     }
 
     #getUserLocation() {
