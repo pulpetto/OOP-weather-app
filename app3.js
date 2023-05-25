@@ -35,11 +35,10 @@ class App {
     }
 
     #displayData(data) {
-        // console.log(data);
         // city doesn't exist -> display info about that
-        if (input.value !== data.name) {
-            alert("Looks like you misspeled city name, please try again");
-        }
+        // if (input.value !== data.name) {
+        //     alert("Looks like you misspeled city name, please try again");
+        // }
 
         // city exists -> display data for current coords
         input.value = data.name;
