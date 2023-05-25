@@ -88,12 +88,21 @@ class App {
         const lng = position.coords.longitude;
 
         // make api call with that
-        fetch(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=721a956f72738d6959dce2e545fb8d44&units=metric`
-        )
-            .then((response) => response.json())
-            // display data for current coords
-            .then((data) => weatherApp.#displayData(data));
+        const apiCall = async function (lat, lng) {
+            const res = await fetch(
+                `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=721a956f72738d6959dce2e545fb8d44&units=metric`
+            );
+            const data = await res.json();
+            weatherApp.#displayData(data);
+        };
+        apiCall(lat, lng);
+
+        // fetch(
+        //     `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=721a956f72738d6959dce2e545fb8d44&units=metric`
+        // )
+        //     .then((response) => response.json())
+        //     // display data for current coords
+        //     .then((data) => weatherApp.#displayData(data));
     }
 
     #locationRejectError() {
