@@ -89,11 +89,17 @@ class App {
 
         // make api call with that
         const apiCall = async function (lat, lng) {
-            const res = await fetch(
-                `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=721a956f72738d6959dce2e545fb8d44&units=metric`
-            );
-            const data = await res.json();
-            weatherApp.#displayData(data);
+            try {
+                const res = await fetch(
+                    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=721a956f72738d6959dce2e545fb8d44&units=metric`
+                );
+                // create err
+                const data = await res.json();
+                // do it with this keyword
+                weatherApp.#displayData(data);
+            } catch (err) {
+                alert(err);
+            }
         };
         apiCall(lat, lng);
 
