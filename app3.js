@@ -26,6 +26,19 @@ class App {
         input.value = "";
     }
 
+    #displayError(errorMsg) {
+        errorContainer.style.marginTop = "5rem";
+        errorContainer.style.height = "30rem";
+
+        setTimeout(() => {
+            errorContainer.style.opacity = 1;
+            errorContainer.style.visibility = "visible";
+        }, 200);
+
+        // errorMessage.value = errorMsg;
+        errorMessage.innerText = errorMsg;
+    }
+
     #getUserLocation() {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -39,7 +52,7 @@ class App {
     }
 
     #apiCallByCity() {
-        errorContainer.style.display = "none";
+        if (input.value === "") return;
 
         const apiCall = async function (cityName) {
             try {
@@ -71,13 +84,32 @@ class App {
                 }
 
                 const data = await res.json();
+                if (data.length === 0) {
+                    // weatherApp.#displayError("Couldn't find your city");
+                    errorContainer.style.marginTop = "5rem";
+                    errorContainer.style.height = "30rem";
+
+                    setTimeout(() => {
+                        errorContainer.style.opacity = 1;
+                        errorContainer.style.visibility = "visible";
+                    }, 200);
+
+                    // errorMessage.value = errorMsg;
+                    errorMessage.innerText = "cdnt fyc";
+                    return;
+                }
+
+                console.log(data);
+                console.log(data[0]);
+                console.log(data[0].lat);
+                console.log(data[0].lon);
                 // call callApiByCoords
             } catch (err) {
                 console.log(`💥💥${err.message}💥💥`);
                 weatherApp.#displayError(err.message);
             }
         };
-        apiCall(input.value);
+        apiCall();
     }
 
     #displayData(data) {
@@ -130,22 +162,10 @@ class App {
         }
     }
 
-    #displayError(errorMsg) {
-        errorContainer.style.marginTop = "5rem";
-        errorContainer.style.height = "30rem";
-
-        setTimeout(() => {
-            errorContainer.style.opacity = 1;
-            errorContainer.style.visibility = "visible";
-        }, 200);
-
-        // errorMessage.value = errorMsg;
-        errorMessage.innerText = errorMsg;
-    }
-
     #callApiByCoords(position) {
         // get users lat and lng
-        const lat = position.coords.latitude;
+        // const lat = position.coords.latitude;
+        const lat = 752985982112212;
         const lng = position.coords.longitude;
 
         // make api call with that
