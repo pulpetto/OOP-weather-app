@@ -9,6 +9,9 @@ const weatherName = document.querySelector(".app__main__weather--name");
 const sunriseTime = document.querySelector(".app__main__sunrise--time");
 const sunsetTime = document.querySelector(".app__main__sunset--time");
 
+const errorContainer = document.querySelector(".app__error");
+const errorImg = document.querySelector(".app__error--img");
+const errorMessage = document.querySelector(".app__error--text");
 class App {
     constructor() {
         this.#getUserLocation();
@@ -82,6 +85,18 @@ class App {
         }
     }
 
+    #displayError(errorMsg) {
+        errorContainer.style.marginTop = "5rem";
+        errorContainer.style.height = "30rem";
+        setTimeout(() => {
+            errorContainer.style.opacity = 1;
+            errorContainer.style.visibility = "visible";
+        }, 200);
+
+        // errorMessage.value = errorMsg;
+        errorMessage.innerText = errorMsg;
+    }
+
     #callApiByCoords(position) {
         // get users lat and lng
         // const lat = position.coords.latitude;
@@ -121,9 +136,10 @@ class App {
                 const data = await res.json();
                 weatherApp.#displayData(data);
             } catch (err) {
-                // alert(err);
-                console.log(`💥💥${err}💥💥`);
                 console.log(`💥💥${err.message}💥💥`);
+
+                // function that will display err.message
+                weatherApp.#displayError(err.message);
             }
         };
         apiCall(lat, lng);

@@ -158,3 +158,22 @@ section {
 
 .app__main__sunset--time {
 }
+
+/* error */
+.app__error {
+    margin-top: 0rem;
+    height: 0rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s, height 0.3s;
+    text-align: center;
+}
+
+.app__error--img {
+    width: 20rem;
+    height: 20rem;
+    margin-bottom: 2rem;
+}
+
+.app__error--text {
+}
