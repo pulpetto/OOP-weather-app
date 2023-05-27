@@ -84,7 +84,8 @@ class App {
 
     #callApiByCoords(position) {
         // get users lat and lng
-        const lat = position.coords.latitude;
+        // const lat = position.coords.latitude;
+        const lat = 200000022222;
         const lng = position.coords.longitude;
 
         // make api call with that
@@ -93,12 +94,36 @@ class App {
                 const res = await fetch(
                     `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=721a956f72738d6959dce2e545fb8d44&units=metric`
                 );
-                // create err
+
+                // all error cases
+                // if (!res.ok) {
+                //     throw new Error(
+                //         "Unable to reach your coords, please try again"
+                //     );
+                // }
+
+                if (res.status === 400) {
+                    throw new Error("400 error");
+                }
+
+                if (res.status === 401) {
+                    throw new Error("401 error");
+                }
+
+                if (res.status === 403) {
+                    throw new Error("403 error");
+                }
+
+                if (res.status === 404) {
+                    throw new Error("404 error");
+                }
+
                 const data = await res.json();
-                // do it with this keyword
                 weatherApp.#displayData(data);
             } catch (err) {
-                alert(err);
+                // alert(err);
+                console.log(`💥💥${err}💥💥`);
+                console.log(`💥💥${err.message}💥💥`);
             }
         };
         apiCall(lat, lng);
