@@ -18,7 +18,8 @@ class App {
         window.addEventListener("beforeunload", this.#clearInput);
 
         // call api by given name
-        searchBtn.addEventListener("click", this.#displayData);
+        // searchBtn.addEventListener("click", this.#displayData);
+        searchBtn.addEventListener("click", this.#apiCallByCity);
     }
 
     #clearInput() {
@@ -37,7 +38,51 @@ class App {
         }
     }
 
+    #apiCallByCity() {
+        errorContainer.style.display = "none";
+
+        const apiCall = async function (cityName) {
+            try {
+                const res = await fetch(
+                    `http://api.openweathermap.org/geo/1.0/direct?q=${input.value}&limit=5&appid=721a956f72738d6959dce2e545fb8d44`
+                );
+
+                // all error cases
+                // if (!res.ok) {
+                //     throw new Error(
+                //         "Unable to reach your coords, please try again"
+                //     );
+                // }
+
+                if (res.status === 400) {
+                    throw new Error("400 error");
+                }
+
+                if (res.status === 401) {
+                    throw new Error("401 error");
+                }
+
+                if (res.status === 403) {
+                    throw new Error("403 error");
+                }
+
+                if (res.status === 404) {
+                    throw new Error("404 error");
+                }
+
+                const data = await res.json();
+                // call callApiByCoords
+            } catch (err) {
+                console.log(`💥💥${err.message}💥💥`);
+                weatherApp.#displayError(err.message);
+            }
+        };
+        apiCall(input.value);
+    }
+
     #displayData(data) {
+        errorContainer.style.display = "none";
+
         // city doesn't exist -> display info about that
         // if (input.value !== data.name) {
         //     alert("Looks like you misspeled city name, please try again");
@@ -88,6 +133,7 @@ class App {
     #displayError(errorMsg) {
         errorContainer.style.marginTop = "5rem";
         errorContainer.style.height = "30rem";
+
         setTimeout(() => {
             errorContainer.style.opacity = 1;
             errorContainer.style.visibility = "visible";
@@ -99,8 +145,7 @@ class App {
 
     #callApiByCoords(position) {
         // get users lat and lng
-        // const lat = position.coords.latitude;
-        const lat = 200000022222;
+        const lat = position.coords.latitude;
         const lng = position.coords.longitude;
 
         // make api call with that
@@ -137,19 +182,10 @@ class App {
                 weatherApp.#displayData(data);
             } catch (err) {
                 console.log(`💥💥${err.message}💥💥`);
-
-                // function that will display err.message
                 weatherApp.#displayError(err.message);
             }
         };
         apiCall(lat, lng);
-
-        // fetch(
-        //     `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=721a956f72738d6959dce2e545fb8d44&units=metric`
-        // )
-        //     .then((response) => response.json())
-        //     // display data for current coords
-        //     .then((data) => weatherApp.#displayData(data));
     }
 
     #locationRejectError() {
