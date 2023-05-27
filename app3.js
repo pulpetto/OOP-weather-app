@@ -162,7 +162,7 @@ class App {
         }
     }
 
-    #callApiByCoords(position) {
+    #callApiByCoords = async function (position) {
         // get users lat and lng
         // const lat = position.coords.latitude;
         const lat = 752985982112212;
@@ -206,7 +206,7 @@ class App {
             }
         };
         apiCall(lat, lng);
-    }
+    };
 
     #locationRejectError() {
         alert(
