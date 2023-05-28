@@ -108,68 +108,67 @@ class App {
         }
     }
 
-    #apiCallByCity() {
+    #apiCallByCity = async function () {
         // some error that input is empty
         if (input.value === "") return;
 
-        const apiCall = async function (cityName) {
-            try {
-                const res = await fetch(
-                    `http://api.openweathermap.org/geo/1.0/direct?q=${input.value}&limit=5&appid=721a956f72738d6959dce2e545fb8d44`
-                );
+        try {
+            const res = await fetch(
+                `http://api.openweathermap.org/geo/1.0/direct?q=${input.value}&limit=5&appid=721a956f72738d6959dce2e545fb8d44`
+            );
 
-                // all error cases
-                // if (!res.ok) {
-                //     throw new Error(
-                //         "Unable to reach your coords, please try again"
-                //     );
-                // }
+            // all error cases
+            // if (!res.ok) {
+            //     throw new Error(
+            //         "Unable to reach your coords, please try again"
+            //     );
+            // }
 
-                if (res.status === 400) {
-                    throw new Error("400 error");
-                }
-
-                if (res.status === 401) {
-                    throw new Error("401 error");
-                }
-
-                if (res.status === 403) {
-                    throw new Error("403 error");
-                }
-
-                if (res.status === 404) {
-                    throw new Error("404 error");
-                }
-
-                const data = await res.json();
-                if (data.length === 0) {
-                    // weatherApp.#displayError("Couldn't find your city");
-                    errorContainer.style.marginTop = "5rem";
-                    errorContainer.style.height = "30rem";
-
-                    setTimeout(() => {
-                        errorContainer.style.opacity = 1;
-                        errorContainer.style.visibility = "visible";
-                    }, 200);
-
-                    // errorMessage.value = errorMsg;
-                    errorMessage.innerText = "cdnt fyc";
-                    return;
-                }
-
-                console.log(data);
-                console.log(data[0]);
-                console.log(data[0].lat);
-                console.log(data[0].lon);
-                // call callApiByLatLng
-                weatherApp.#callApiByLatLng(lat, lng);
-            } catch (err) {
-                console.log(`💥💥${err.message}💥💥`);
-                weatherApp.#displayError(err.message);
+            if (res.status === 400) {
+                throw new Error("400 error");
             }
-        };
-        apiCall();
-    }
+
+            if (res.status === 401) {
+                throw new Error("401 error");
+            }
+
+            if (res.status === 403) {
+                throw new Error("403 error");
+            }
+
+            if (res.status === 404) {
+                throw new Error("404 error");
+            }
+
+            const data = await res.json();
+            if (data.length === 0) {
+                // weatherApp.#displayError("Couldn't find your city");
+                errorContainer.style.marginTop = "5rem";
+                errorContainer.style.height = "30rem";
+
+                setTimeout(() => {
+                    errorContainer.style.opacity = 1;
+                    errorContainer.style.visibility = "visible";
+                }, 200);
+
+                // errorMessage.value = errorMsg;
+                errorMessage.innerText = "cdnt fyc";
+                return;
+            }
+
+            console.log(data);
+            console.log(data[0]);
+            console.log(data[0].lat);
+            console.log(data[0].lon);
+            const inputLat = data[0].lat;
+            const inputLng = data[0].lon;
+            // call callApiByLatLng
+            weatherApp.#callApiByLatLng(inputLat, inputLng);
+        } catch (err) {
+            console.error(`💥💥${err.message}💥💥`);
+            weatherApp.#displayError(err.message);
+        }
+    };
 
     #displayData(data) {
         // errorContainer.style.display = "none";
