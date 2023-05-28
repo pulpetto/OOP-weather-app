@@ -109,6 +109,15 @@ class App {
     }
 
     #apiCallByCity = async function () {
+        errorContainer.style.marginTop = "0rem";
+        errorContainer.style.height = "0rem";
+        errorContainer.style.opacity = "0";
+        errorContainer.style.visibility = "hidden";
+
+        weather.style.marginTop = "0rem";
+        weather.style.height = "0rem";
+        weather.style.opacity = 0;
+        weather.style.visibility = "hidden";
         // some error that input is empty
         if (input.value === "") return;
 
@@ -117,52 +126,35 @@ class App {
                 `http://api.openweathermap.org/geo/1.0/direct?q=${input.value}&limit=5&appid=721a956f72738d6959dce2e545fb8d44`
             );
 
-            // all error cases
-            // if (!res.ok) {
-            //     throw new Error(
-            //         "Unable to reach your coords, please try again"
-            //     );
-            // }
+            // custom errors
+            if (!res.ok) {
+                if (res.status === 400) {
+                    throw new Error("400 error");
+                }
 
-            if (res.status === 400) {
-                throw new Error("400 error");
-            }
+                if (res.status === 401) {
+                    throw new Error("401 error");
+                }
 
-            if (res.status === 401) {
-                throw new Error("401 error");
-            }
+                if (res.status === 403) {
+                    throw new Error("403 error");
+                }
 
-            if (res.status === 403) {
-                throw new Error("403 error");
-            }
-
-            if (res.status === 404) {
-                throw new Error("404 error");
+                if (res.status === 404) {
+                    throw new Error("404 error");
+                }
             }
 
             const data = await res.json();
+
+            // check if city exists
             if (data.length === 0) {
-                // weatherApp.#displayError("Couldn't find your city");
-                errorContainer.style.marginTop = "5rem";
-                errorContainer.style.height = "30rem";
-
-                setTimeout(() => {
-                    errorContainer.style.opacity = 1;
-                    errorContainer.style.visibility = "visible";
-                }, 200);
-
-                // errorMessage.value = errorMsg;
-                errorMessage.innerText = "cdnt fyc";
+                weatherApp.#displayError("Couldn't find your city");
                 return;
             }
 
-            console.log(data);
-            console.log(data[0]);
-            console.log(data[0].lat);
-            console.log(data[0].lon);
             const inputLat = data[0].lat;
             const inputLng = data[0].lon;
-            // call callApiByLatLng
             weatherApp.#callApiByLatLng(inputLat, inputLng);
         } catch (err) {
             console.error(`💥💥${err.message}💥💥`);
