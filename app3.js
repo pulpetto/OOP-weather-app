@@ -1,4 +1,6 @@
 "use strict";
+
+// selecting elements
 const input = document.querySelector(".app__search--input");
 const searchBtn = document.querySelector(".app__search__btn--search-icon");
 const weather = document.querySelector(".app__main");
@@ -12,6 +14,8 @@ const sunsetTime = document.querySelector(".app__main__sunset--time");
 const errorContainer = document.querySelector(".app__error");
 const errorImg = document.querySelector(".app__error--img");
 const errorMessage = document.querySelector(".app__error--text");
+
+// main app
 class App {
     constructor() {
         this.#getUserLocation();
@@ -43,7 +47,7 @@ class App {
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 // user accepts -> get location
-                this.#callApiByCoords,
+                this.#getUserLatLng,
 
                 // user rejects permission -> display info about that
                 this.#locationRejectError
@@ -51,7 +55,55 @@ class App {
         }
     }
 
+    #callApiByLatLng = async function (lat, lng) {
+        try {
+            const res = await fetch(
+                `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=721a956f72738d6959dce2e545fb8d44&units=metric`
+            );
+
+            // all error cases
+            // if (!res.ok) {
+            //     throw new Error(
+            //         "Unable to reach your coords, please try again"
+            //     );
+            // }
+
+            if (res.status === 400) {
+                throw new Error("400 error");
+            }
+
+            if (res.status === 401) {
+                throw new Error("401 error");
+            }
+
+            if (res.status === 403) {
+                throw new Error("403 error");
+            }
+
+            if (res.status === 404) {
+                throw new Error("404 error");
+            }
+
+            const data = await res.json();
+            weatherApp.#displayData(data);
+        } catch (err) {
+            console.log(`💥💥${err.message}💥💥`);
+            weatherApp.#displayError(err.message);
+        }
+    };
+
+    #getUserLatLng(position) {
+        // get users lat and lng
+        // const lat = 752985982112212;
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        // make api call with that
+        weatherApp.#callApiByLatLng(lat, lng);
+    }
+
     #apiCallByCity() {
+        // some error that input is empty
         if (input.value === "") return;
 
         const apiCall = async function (cityName) {
@@ -103,7 +155,8 @@ class App {
                 console.log(data[0]);
                 console.log(data[0].lat);
                 console.log(data[0].lon);
-                // call callApiByCoords
+                // call callApiByLatLng
+                weatherApp.#callApiByLatLng(lat, lng);
             } catch (err) {
                 console.log(`💥💥${err.message}💥💥`);
                 weatherApp.#displayError(err.message);
@@ -113,7 +166,7 @@ class App {
     }
 
     #displayData(data) {
-        errorContainer.style.display = "none";
+        // errorContainer.style.display = "none";
 
         // city doesn't exist -> display info about that
         // if (input.value !== data.name) {
@@ -161,52 +214,6 @@ class App {
             }
         }
     }
-
-    #callApiByCoords = async function (position) {
-        // get users lat and lng
-        // const lat = position.coords.latitude;
-        const lat = 752985982112212;
-        const lng = position.coords.longitude;
-
-        // make api call with that
-        const apiCall = async function (lat, lng) {
-            try {
-                const res = await fetch(
-                    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=721a956f72738d6959dce2e545fb8d44&units=metric`
-                );
-
-                // all error cases
-                // if (!res.ok) {
-                //     throw new Error(
-                //         "Unable to reach your coords, please try again"
-                //     );
-                // }
-
-                if (res.status === 400) {
-                    throw new Error("400 error");
-                }
-
-                if (res.status === 401) {
-                    throw new Error("401 error");
-                }
-
-                if (res.status === 403) {
-                    throw new Error("403 error");
-                }
-
-                if (res.status === 404) {
-                    throw new Error("404 error");
-                }
-
-                const data = await res.json();
-                weatherApp.#displayData(data);
-            } catch (err) {
-                console.log(`💥💥${err.message}💥💥`);
-                weatherApp.#displayError(err.message);
-            }
-        };
-        apiCall(lat, lng);
-    };
 
     #locationRejectError() {
         alert(
