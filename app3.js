@@ -30,6 +30,12 @@ class App {
         input.value = "";
     }
 
+    #locationRejectError() {
+        alert(
+            "You blocked your location, please click allow or input city name manually"
+        );
+    }
+
     #displayError(errorMsg) {
         errorContainer.style.marginTop = "5rem";
         errorContainer.style.height = "30rem";
@@ -41,18 +47,6 @@ class App {
 
         // errorMessage.value = errorMsg;
         errorMessage.innerText = errorMsg;
-    }
-
-    #getUserLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                // user accepts -> get location
-                this.#getUserLatLng,
-
-                // user rejects permission -> display info about that
-                this.#locationRejectError
-            );
-        }
     }
 
     #callApiByLatLng = async function (lat, lng) {
@@ -100,6 +94,18 @@ class App {
 
         // make api call with that
         weatherApp.#callApiByLatLng(lat, lng);
+    }
+
+    #getUserLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                // user accepts -> get location
+                this.#getUserLatLng,
+
+                // user rejects permission -> display info about that
+                this.#locationRejectError
+            );
+        }
     }
 
     #apiCallByCity() {
@@ -213,12 +219,6 @@ class App {
                 weatherImg.src = "/svg/clear sky NIGHT.svg";
             }
         }
-    }
-
-    #locationRejectError() {
-        alert(
-            "You blocked your location, please click allow or input city name manually"
-        );
     }
 }
 
