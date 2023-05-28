@@ -26,6 +26,18 @@ class App {
         searchBtn.addEventListener("click", this.#apiCallByCity);
     }
 
+    #resetStyles() {
+        errorContainer.style.marginTop = "0rem";
+        errorContainer.style.height = "0rem";
+        errorContainer.style.opacity = "0";
+        errorContainer.style.visibility = "hidden";
+
+        weather.style.marginTop = "0rem";
+        weather.style.height = "0rem";
+        weather.style.opacity = 0;
+        weather.style.visibility = "hidden";
+    }
+
     #clearInput() {
         input.value = "";
     }
@@ -50,6 +62,8 @@ class App {
     }
 
     #callApiByLatLng = async function (lat, lng) {
+        weatherApp.#resetStyles();
+
         try {
             const res = await fetch(
                 `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=721a956f72738d6959dce2e545fb8d44&units=metric`
@@ -109,15 +123,8 @@ class App {
     }
 
     #apiCallByCity = async function () {
-        errorContainer.style.marginTop = "0rem";
-        errorContainer.style.height = "0rem";
-        errorContainer.style.opacity = "0";
-        errorContainer.style.visibility = "hidden";
+        weatherApp.#resetStyles();
 
-        weather.style.marginTop = "0rem";
-        weather.style.height = "0rem";
-        weather.style.opacity = 0;
-        weather.style.visibility = "hidden";
         // some error that input is empty
         if (input.value === "") return;
 
